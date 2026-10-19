@@ -1,0 +1,97 @@
+/*
+ * The guest stage: one fixed, non-scrolling screen. The illustrated business is the
+ * scene; the assistant stands left of centre, speaks from a bubble beside her,
+ * a floating icon dock runs along the bottom and the chat slides in from the right.
+ *
+ * Every colour and size of the stage lives in this file. The stage is exempt
+ * from `npm run lint:ui` (it is an illustration, not the admin kit).
+ */
+
+.stage-page {
+    /* Cool white, deep teal ink, a teal accent and amber highlights. */
+    --paper: #f8fcfc;
+    --paper-soft: #edf6f7;
+    --paper-deep: #d8e9eb;
+    --ink: #0f2a33;
+    --ink-soft: #3d5963;
+    --ink-faint: #758f98;
+    --line: #d3e5e8;
+    --line-strong: #b4d0d5;
+    --accent: #0b7d82;
+    --accent-deep: #07585d;
+    --accent-soft: #d2eef0;
+    --ok: #2f8f5b;
+    --highlight: #f2b13a;
+    --alert: #b4412f;
+    --alert-soft: #fcefeb;
+    --alert-line: #ebbbae;
+    --glass: color-mix(in srgb, var(--paper) 88%, transparent);
+
+    --radius-card: 28px;
+    --radius-control: 16px;
+    --shadow-card: 0 24px 54px -24px rgb(15 42 51 / .55), 0 2px 8px rgb(15 42 51 / .12);
+    --shadow-soft: 0 10px 28px -14px rgb(15 42 51 / .5);
+
+    /* Arrows such as ↗ stay text glyphs instead of turning into coloured emoji. */
+    font-variant-emoji: text;
+
+    height: 100dvh;
+    overflow: hidden;
+    background: var(--paper-deep);
+    color: var(--ink);
+}
+
+.stage {
+    --ease-cine: cubic-bezier(.22, .8, .24, 1);
+    --header: 84px;
+    --gutter: 28px;
+    --dock-h: 104px;
+    --drawer: 400px;
+    --panel-bottom: calc(var(--gutter) + 76px);
+    --chat-composer-height: 56px;
+
+    position: relative;
+    height: 100dvh;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+/* Scenes with a dock keep their panels clear of it. */
+.stage:has(.stage-dock) {
+    --panel-bottom: calc(var(--dock-h) + var(--gutter) + 16px);
+}
+
+.stage :focus-visible,
+.stage-page :focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.stage button:disabled {
+    cursor: wait;
+    opacity: .5;
+}
+
+.stage-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+}
+
+.stage-noscript {
+    position: absolute;
+    z-index: 9;
+    inset: auto 12px 12px;
+    padding: 16px;
+    border-radius: 12px;
+    background: var(--paper);
+    color: var(--ink);
+}
+
+@media (max-width: 1100px) {
+    .stage {
+        --drawer: 360px;
+    }
+}

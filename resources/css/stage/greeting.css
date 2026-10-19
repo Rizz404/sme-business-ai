@@ -1,0 +1,50 @@
+/* The speech bubble beside the assistant: the greeting, or the scene's title and narration. */
+
+.stage-welcome {
+    position: absolute;
+    z-index: 2;
+    left: max(38%, 400px);
+    top: calc(var(--header) + 22px);
+    width: min(480px, 34vw);
+    padding: 22px 28px 24px;
+    border-radius: 30px;
+    background: color-mix(in srgb, var(--paper) 94%, transparent);
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(14px);
+    color: var(--ink);
+}
+
+/* The tail: a turned square that points back to her. */
+.stage-welcome::before {
+    content: '';
+    position: absolute;
+    left: -9px;
+    top: 62px;
+    width: 22px;
+    height: 22px;
+    border-radius: 5px;
+    background: inherit;
+    transform: rotate(45deg);
+}
+
+.stage-welcome h1 {
+    margin-top: 10px;
+    font: 600 clamp(30px, 3vw, 46px)/1.08 var(--font-display);
+    letter-spacing: -.02em;
+}
+
+.stage-welcome h1 em {
+    font-weight: 400;
+    color: var(--accent);
+}
+
+.stage-welcome p {
+    margin-top: 14px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+}
+
+.stage-welcome-scene h1 {
+    font-size: clamp(26px, 2.4vw, 38px);
+}
