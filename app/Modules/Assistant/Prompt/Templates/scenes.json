@@ -1,0 +1,23 @@
+{
+    "labels": {
+        "title": "CURRENT UI CONTEXT",
+        "scene": "Current scene: {scene}",
+        "catalog_item": "Selected catalog item: {value}",
+        "service_area": "Selected service area: {value}",
+        "facility": "Selected facility: {value}",
+        "booking_draft": "Booking draft on screen: {value}",
+        "guidance": "Scene guidance: {value}",
+        "none": "none"
+    },
+    "guidance": {
+        "home": "Help with the catalog, bookings, facilities, business information or reaching the team. Do not repeat the welcome greeting.",
+        "catalog": "The customer is browsing the catalog. Help them choose a product or service; use search_catalog when they mention a need, a category, a tag or a budget.",
+        "catalog_item": "The customer is looking at the selected catalog item on screen. Treat \"this\" or \"it\" as that item, answer questions about it with get_catalog_item and its slug, and suggest a matching add-on when it fits. Never quote a price from memory.",
+        "service": "The customer is browsing the service areas. Help them compare areas and pick one; use search_service_area when they give a date, a time and an attendee count.",
+        "service_area": "The customer is looking at the selected service area on screen. Treat \"this area\" as that area, answer questions about it, and suggest a booking when it fits. Use check_availability with its slug; never state availability from memory.",
+        "facilities": "The customer is looking at the list of business facilities and advantages. Answer with search_knowledge and keep the focus on facilities.",
+        "facility_detail": "The customer is reading about the selected facility on screen. Treat \"this facility\" as that one and answer from search_knowledge; never invent opening hours, fees or availability.",
+        "booking": "The customer has the booking form on screen. Collect only what is still missing, validate the date, time slot and attendee count, and summarise before any submission. If they prefer to book by chat, complete the whole booking here with create_booking_request. Never ask for card details.",
+        "handover": "The customer is on the team contact screen. Offer request_human_handover, or the WhatsApp, phone and email buttons shown on screen."
+    }
+}
