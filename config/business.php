@@ -56,21 +56,24 @@ return [
     |
     | The small round picture of the assistant used beside chat and narration,
     | and the artwork per scene: a plain illustrated background plus one
-    | cut-out of the assistant layered in front, so she can stand clear of the
-    | panels. Scenes without artwork of their own borrow another scene's.
+    | cut-out of the assistant standing in front of it. The background fills
+    | the tall left pane (object-position "focus") or the strip above the
+    | folder on a phone ("focusMobile"). Scenes without artwork of their own
+    | borrow another scene's. Regenerate every file with
+    | `python scripts/generate-stage-assets.py`.
     |
     */
 
     'avatar_image' => 'images/assistant/avatar.svg',
 
     'scenes' => [
-        'home' => ['image' => 'images/scenes/storefront.svg', 'character' => 'images/character/assistant-greeting.svg', 'focus' => 'center 40%', 'focusMobile' => '50% 30%', 'anchor' => 'left', 'text' => 'top'],
-        'catalog' => ['image' => 'images/scenes/catalog.svg', 'character' => 'images/character/assistant-greeting.svg', 'focus' => 'center 40%', 'focusMobile' => '50% 30%', 'anchor' => 'left', 'text' => 'top'],
-        'service' => ['image' => 'images/scenes/workspace.svg', 'character' => 'images/character/assistant-greeting.svg', 'focus' => 'center 45%', 'focusMobile' => '60% 30%', 'anchor' => 'left', 'text' => 'top'],
-        'facilities' => ['image' => 'images/scenes/studio.svg', 'character' => 'images/character/assistant-greeting.svg', 'focus' => 'center 45%', 'focusMobile' => '30% 30%', 'anchor' => 'left', 'text' => 'bottom'],
-        'info' => ['image' => 'images/scenes/office.svg', 'character' => 'images/character/assistant-greeting.svg', 'focus' => 'center 45%', 'focusMobile' => '70% 30%', 'anchor' => 'left', 'text' => 'bottom'],
-        'staff' => ['image' => 'images/scenes/team.svg', 'character' => 'images/character/assistant-clasped.svg', 'focus' => 'center 40%', 'focusMobile' => '60% 30%', 'anchor' => 'left', 'text' => 'top'],
-        'booking' => ['image' => 'images/scenes/booking.svg', 'character' => 'images/character/assistant-notepad.svg', 'focus' => 'center 45%', 'focusMobile' => '30% 30%', 'anchor' => 'left', 'text' => 'bottom'],
+        'home' => ['image' => 'images/scenes/storefront.svg', 'character' => 'images/character/assistant-greeting.svg', 'focus' => '50% 50%', 'focusMobile' => '50% 50%'],
+        'catalog' => ['image' => 'images/scenes/catalog.svg', 'character' => 'images/character/assistant-notepad.svg', 'focus' => '50% 50%', 'focusMobile' => '50% 50%'],
+        'service' => ['image' => 'images/scenes/workspace.svg', 'character' => 'images/character/assistant-clasped.svg', 'focus' => '50% 50%', 'focusMobile' => '50% 50%'],
+        'facilities' => ['image' => 'images/scenes/studio.svg', 'character' => 'images/character/assistant-greeting.svg', 'focus' => '50% 50%', 'focusMobile' => '50% 50%'],
+        'info' => ['image' => 'images/scenes/office.svg', 'character' => 'images/character/assistant-clasped.svg', 'focus' => '50% 50%', 'focusMobile' => '50% 50%'],
+        'staff' => ['image' => 'images/scenes/team.svg', 'character' => 'images/character/assistant-clasped.svg', 'focus' => '50% 50%', 'focusMobile' => '50% 50%'],
+        'booking' => ['image' => 'images/scenes/booking.svg', 'character' => 'images/character/assistant-notepad.svg', 'focus' => '50% 50%', 'focusMobile' => '50% 50%'],
     ],
 
     'scene_artwork' => [

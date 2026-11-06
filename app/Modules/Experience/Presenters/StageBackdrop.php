@@ -3,13 +3,13 @@
 namespace App\Modules\Experience\Presenters;
 
 /**
- * Artwork for a scene: an illustrated background, the assistant cut-out and
- * where she stands, so the scene's text and panels stay clear of her.
+ * Artwork for a scene: an illustrated background for the pane and the assistant
+ * cut-out standing in it.
  */
 final class StageBackdrop
 {
     /**
-     * @return array{image: string, focus: string, focusMobile: string, character: string, anchor: string, text: string, avatarImage: string}
+     * @return array{image: string, focus: string, focusMobile: string, character: string, avatarImage: string}
      */
     public static function for(string $scene): array
     {
@@ -21,8 +21,6 @@ final class StageBackdrop
             'focus' => $artwork['focus'],
             'focusMobile' => $artwork['focusMobile'],
             'character' => asset($artwork['character']),
-            'anchor' => $artwork['anchor'],
-            'text' => $artwork['text'],
             'avatarImage' => self::avatar(),
         ];
     }

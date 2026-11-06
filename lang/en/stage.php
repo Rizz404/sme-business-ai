@@ -165,6 +165,7 @@ return [
         'welcome' => 'Welcome to',
         'counter' => 'the front desk',
         'intro' => 'Clear offers, honest prices, quick answers. Let me take care of the details.',
+        'home' => 'Home',
         'explore' => 'Explore the business',
         'available' => 'Here to help, all day',
         'assistant' => 'Your AI assistant',

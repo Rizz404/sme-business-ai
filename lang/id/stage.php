@@ -165,6 +165,7 @@ return [
         'welcome' => 'Selamat datang di',
         'counter' => 'meja depan',
         'intro' => 'Penawaran jelas, harga jujur, jawaban cepat. Biar saya urus detailnya.',
+        'home' => 'Beranda',
         'explore' => 'Jelajahi bisnis',
         'available' => 'Siap membantu sepanjang hari',
         'assistant' => 'Asisten AI Anda',
