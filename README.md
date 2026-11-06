@@ -9,7 +9,7 @@ Proyek ini turunan dari Cafe AI: mekanismenya (gateway model, daftar putih tool,
 ## Fitur
 
 ### Sisi pengunjung
-- **Halaman bertema "stage"**: meja depan, katalog, area layanan, keunggulan, info bisnis, tim, dan pemesanan. Latarnya ilustrasi SVG dengan karakter assistant yang berdiri di kiri-tengah, gelembung bicara di sebelahnya, dan dock ikon bulat di bawah sebagai navigasi. Lengkap dengan narrator dan efek suara (tombol bisa dimatikan).
+- **Halaman bertema "stage" berlayar terbagi**: kiri berupa pane ilustrasi SVG dengan karakter assistant yang berdiri di dalamnya dan narasi yang diketik pada kartu di dasar pane; kanan berupa "map" kertas kraft dengan tab sebagai navigasi (beranda, katalog, area layanan, keunggulan, info, pemesanan, tim), lembar isi halaman, dan bilah chat di dasarnya. Di ponsel pane menyusut menjadi strip di atas map. Lengkap dengan narrator dan efek suara (tombol bisa dimatikan).
 - **Tiga bahasa**: Indonesia (`id`), Inggris (`en`), dan Jepang (`ja`), dipilih lewat parameter `?lang=`.
 - **Katalog**: produk, layanan, paket, konsultasi, produk digital, dan tambahan, lengkap dengan harga, tag, persyaratan, durasi, dan penanda "tidak tersedia".
 - **Area layanan**: toko, bengkel kerja, online, dan kunjungan ke lokasi pelanggan, lengkap dengan kapasitas, fasilitas, dan biaya pemesanan.
@@ -67,7 +67,7 @@ Kode ada di [app/Modules/Assistant/](app/Modules/Assistant) (model, prompt, tool
 - PHP 8.3+ (dikembangkan di 8.4), Laravel 13
 - SQLite untuk development dan tes; **PostgreSQL untuk produksi**. Session, cache, dan queue memakai driver `database`
 - Vite 8 dan Tailwind CSS 4 untuk frontend, dengan JavaScript vanilla (tanpa framework) di `resources/js/`
-- Font Fraunces dan DM Sans (Bunny Fonts), ilustrasi SVG di `public/images/`
+- Font Fraunces dan DM Sans (Bunny Fonts), ilustrasi SVG di `public/images/` (dibuat oleh `scripts/generate-stage-assets.py`)
 - LLM lewat HTTP (endpoint kompatibel OpenAI)
 - PHPUnit 12 untuk tes, Laravel Pint untuk format kode
 
@@ -168,16 +168,16 @@ deploy/                 contoh env produksi (PostgreSQL) dan PHP; nginx/supervis
 lang/{id,en,ja}/        teks panggung, validasi pemesanan, dan pesan handover
 public/images/          scenes/, character/, assistant/, catalog/, service/ (ilustrasi SVG)
 resources/
-  css/                  theme.css (token admin), base.css, presentation.css (panggung: stage/*.css)
+  css/                  theme.css (token admin), base.css, presentation.css (panggung: stage/*.css; warna hanya di stage/tokens.css)
   js/                   app.js, stage, narrator, assistant, booking, sound, shared/, ui/
   views/                halaman pengunjung (business/), admin (admin/), components/
-scripts/                check-ui-conventions.mjs (npm run lint:ui)
+scripts/                check-ui-conventions.mjs (npm run lint:ui), generate-stage-assets.py (ilustrasi panggung)
 tests/                  Feature/, Unit/, Support/, js/
 ```
 
 ## Mengganti ilustrasi
 
-Semua gambar adalah SVG di `public/images/`. Latar scene ada di `scenes/`, karakter assistant di `character/`, avatar bulat di `assistant/avatar.svg`. Gambar katalog dan area layanan diacu dari kolom `image_url` (path di bawah `public/` atau URL penuh), jadi foto asli bisa dipakai langsung dari panel admin. Pemetaan scene ke gambar ada di [config/business.php](config/business.php) (`scenes`).
+Semua gambar panggung adalah SVG di `public/images/`: latar scene 1920x1080 di `scenes/`, karakter assistant 800x1200 yang terpotong rata di bawah di `character/`, dan avatar bulat di `assistant/avatar.svg`. Ketiganya dibuat ulang oleh `python scripts/generate-stage-assets.py`, jadi ubah skripnya (bukan file SVG-nya) bila ingin mengganti gaya. Pane kiri berbentuk tinggi, jadi subjek latar ditaruh di tengah. Gambar katalog dan area layanan diacu dari kolom `image_url` (path di bawah `public/` atau URL penuh), jadi foto asli bisa dipakai langsung dari panel admin. Pemetaan scene ke gambar dan titik fokus ada di [config/business.php](config/business.php) (`scenes`).
 
 ## Produksi
 
