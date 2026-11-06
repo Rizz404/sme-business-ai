@@ -6,7 +6,7 @@
 @import './stage/shell.css';
 @import './stage/header.css';
 @import './stage/greeting.css';
-@import './stage/dock.css';
+@import './stage/tabs.css';
 @import './stage/narrator.css';
 @import './stage/panels.css';
 @import './stage/chat.css';

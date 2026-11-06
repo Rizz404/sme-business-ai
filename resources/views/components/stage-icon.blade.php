@@ -1,8 +1,9 @@
-{{-- The icon of a board card. Outline strokes on a 24px grid; add a name to the list before using it. --}}
+{{-- The icon of a folder tab or destination card. Outline strokes on a 24px grid; add a name to the list before using it. --}}
 @props(['name'])
 
 @php
     $paths = [
+        'home' => 'M4 11l8-7 8 7v9H5v-9Zm5 9v-6h6v6',
         'bag' => 'M6 8h12l-1 12H7L6 8Zm3 0V6a3 3 0 0 1 6 0v2',
         'pin' => 'M12 21s-6-5-6-10a6 6 0 0 1 12 0c0 5-6 10-6 10Zm0-8a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z',
         'sparkle' => 'M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Zm7 12l.7 1.8L21.5 17.5l-1.8.7L19 20l-.7-1.8-1.8-.7 1.8-.7L19 15Z',

@@ -1,4 +1,4 @@
-<section class="stage-content stage-panel-right @container" aria-label="{{ $wizard['title'] }}">
+<section class="stage-content @container" aria-label="{{ $wizard['title'] }}">
     <a href="{{ route('business.show', ['businessSlug' => $business->slug, 'lang' => $locale]) }}" data-stage-exit data-tour-line="{{ $narration['tour_home'] }}" class="panel-close" aria-label="{{ $stageCopy['back'] }}"><span aria-hidden="true">×</span></a>
     <p class="stage-eyebrow">{{ $business->name }}</p>
     <h2>{{ $wizard['title'] }}</h2>
@@ -14,8 +14,6 @@
         data-preselect-area="{{ $preselectedArea ?? '' }}"
     >
         <div data-wizard-flow>
-            <p class="mt-3 max-w-xl text-sm leading-relaxed text-stone-600">{{ $wizard['intro'] }}</p>
-
             <div class="wizard-progress" aria-label="{{ $wizard['title'] }}">
                 <p class="wizard-step-label" data-wizard-step-label aria-live="polite"></p>
                 <ol>

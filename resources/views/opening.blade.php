@@ -8,31 +8,48 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="stage-page antialiased" style="--assistant-image: url('{{ $avatarImage }}'); --stage-focus: {{ $backdrop['focus'] }}; --stage-focus-mobile: {{ $backdrop['focusMobile'] }}">
-    <main class="stage">
+    <main class="stage stage-opening">
         <div class="stage-loader" data-stage-loader role="status"><span class="business-monogram" aria-hidden="true">S</span><p>{{ $opening['loading'] }}</p></div>
-        <img src="{{ $backdrop['image'] }}" alt="" class="stage-image" fetchpriority="high">
-        <div class="stage-shade"></div>
-        <img src="{{ $backdrop['character'] }}" alt="" class="stage-character" data-anchor="left">
 
-        <header class="stage-header">
-            <span class="flex min-w-0 items-center gap-3">
-                <span class="business-monogram" aria-hidden="true">S</span>
-                <span class="block truncate font-semibold tracking-tight">SME Business AI</span>
-            </span>
-            <div class="stage-tools">
-                <x-sound-toggle :on="$opening['sound_on']" :off="$opening['sound_off']" />
-                <nav aria-label="Language" class="stage-lang">
-                    @foreach ($supportedLocales as $code)
-                        <a href="?lang={{ $code }}" lang="{{ $code }}" aria-label="{{ ['id' => 'Bahasa Indonesia', 'en' => 'English', 'ja' => '日本語'][$code] }}" @if($code === $locale) aria-current="true" @endif>{{ $code }}</a>
-                    @endforeach
-                </nav>
-            </div>
-        </header>
+        <section class="stage-pane">
+            <img src="{{ $backdrop['image'] }}" alt="" class="stage-image" fetchpriority="high">
+            <div class="stage-shade"></div>
+            <img src="{{ $backdrop['character'] }}" alt="" class="stage-character">
 
-        <section class="opening-panel" aria-labelledby="opening-title">
-            <p class="stage-eyebrow">AI ASSISTANT</p>
-            <h1 id="opening-title">{{ $opening['welcome'] }}<br><em>SME Business AI</em></h1>
+            <header class="stage-header">
+                <span class="flex min-w-0 items-center gap-3">
+                    <span class="business-monogram" aria-hidden="true">S</span>
+                    <span class="block truncate font-semibold tracking-tight">SME Business AI</span>
+                </span>
+                <div class="stage-tools">
+                    <x-sound-toggle :on="$opening['sound_on']" :off="$opening['sound_off']" />
+                    <nav aria-label="Language" class="stage-lang">
+                        @foreach ($supportedLocales as $code)
+                            <a href="?lang={{ $code }}" lang="{{ $code }}" aria-label="{{ ['id' => 'Bahasa Indonesia', 'en' => 'English', 'ja' => '日本語'][$code] }}" @if($code === $locale) aria-current="true" @endif>{{ $code }}</a>
+                        @endforeach
+                    </nav>
+                </div>
+            </header>
+        </section>
+
+        <div class="stage-tabs"><span class="stage-tab" aria-current="page"><span class="stage-tab-label">AI ASSISTANT</span></span></div>
+
+        <section class="stage-content opening-sheet" aria-labelledby="opening-title">
+            <p class="stage-eyebrow">SME Business AI</p>
+            <h1 id="opening-title">{{ $opening['welcome'] }} <em>SME Business AI</em></h1>
             <p class="opening-tagline">{{ $opening['tagline'] }}</p>
+
+            <div class="opening-businesses">
+                @forelse ($businesses as $business)
+                    <a href="{{ route('business.show', ['businessSlug' => $business->slug, 'lang' => $locale]) }}" class="opening-business" data-stage-exit>
+                        <span class="business-monogram" aria-hidden="true">{{ mb_substr($business->name, 0, 1) }}</span>
+                        <span>{{ str_replace(':name', $business->name, $opening['enter']) }}</span>
+                        <span aria-hidden="true">→</span>
+                    </a>
+                @empty
+                    <p class="opening-empty">{{ $opening['empty'] }}</p>
+                @endforelse
+            </div>
 
             @if ($businesses->count() === 1)
                 @php
@@ -51,16 +68,6 @@
                 </ul>
             @endif
         </section>
-
-        <div class="opening-enter">
-            @forelse ($businesses as $business)
-                <a href="{{ route('business.show', ['businessSlug' => $business->slug, 'lang' => $locale]) }}" class="opening-button" data-stage-exit>
-                    {{ str_replace(':name', $business->name, $opening['enter']) }} <span aria-hidden="true">→</span>
-                </a>
-            @empty
-                <p class="opening-empty">{{ $opening['empty'] }}</p>
-            @endforelse
-        </div>
     </main>
 </body>
 </html>

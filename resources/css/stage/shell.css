@@ -1,72 +1,93 @@
-/* The scene, the assistant, the arrival and the walk to the next scene. */
+/*
+ * The frame: a two-column grid. The pane (illustration, assistant, narration card)
+ * fills the left; the folder (tabs / sheet / chat bar) fills the right. The chat
+ * widget sits in `display: contents` wrappers, so its bar and sheet are grid
+ * items of this same grid and land in the folder's cells.
+ */
+
+.stage {
+    display: grid;
+    grid-template-columns: var(--pane-w) minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+        "pane tabs"
+        "pane content"
+        "pane bar";
+    background:
+        radial-gradient(120% 80% at 100% 0%, color-mix(in srgb, var(--paper) 22%, transparent), transparent 60%),
+        linear-gradient(160deg, var(--desk), var(--desk-deep));
+}
+
+.stage-pane {
+    position: relative;
+    z-index: 1;
+    grid-area: pane;
+    overflow: hidden;
+    background: var(--paper-deep);
+    box-shadow: 10px 0 34px -14px rgb(29 35 71 / .55);
+    isolation: isolate;
+}
 
 .stage-image {
     position: absolute;
     inset: 0;
+    z-index: -2;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: var(--stage-focus, center 22%);
-    filter: brightness(1.14) saturate(1.06);
-    transform-origin: 40% 40%;
+    object-position: var(--stage-focus, 50% 50%);
+    transform-origin: 50% 45%;
     transition: transform 1s cubic-bezier(.2, .7, .2, 1), filter 1s ease;
     animation: stage-settle 1s var(--ease-cine) backwards;
-    z-index: -2;
 }
 
-/* A cool wash lifts the scene art under the dock and a navy veil settles the header. */
+/* An ink veil settles the header; a paper wash lifts the foot under the narration card. */
 .stage-shade {
     position: absolute;
     inset: 0;
     z-index: -1;
     background:
-        linear-gradient(0deg, rgb(248 252 252 / .55) 0, rgb(248 252 252 / .12) 26%, transparent 44%),
-        linear-gradient(180deg, rgb(15 42 51 / .2), transparent 22%);
+        linear-gradient(0deg, rgb(251 246 234 / .5) 0, rgb(251 246 234 / .08) 30%, transparent 46%),
+        linear-gradient(180deg, rgb(29 35 71 / .32), transparent 24%);
 }
 
-/* She stands behind the dock, left of centre, and is cut flat at the bottom edge. */
+/* She stands in the middle of the pane, cut flat at the bottom edge, behind the card. */
 .stage-character {
     position: absolute;
     z-index: 0;
     bottom: 0;
-    left: 8%;
-    height: min(82%, 900px);
+    left: 0;
+    right: 0;
+    margin-inline: auto;
+    height: min(82%, 940px);
     width: auto;
-    max-width: 30%;
+    max-width: 96%;
     object-fit: contain;
-    object-position: bottom left;
+    object-position: bottom center;
     pointer-events: none;
     animation: character-arrive .6s var(--ease-cine) .08s backwards;
 }
 
-.stage.is-leaving .stage-character {
-    opacity: 0;
-    transform: translateY(8px) scale(.985);
-    transition: opacity .28s ease, transform .4s var(--ease-cine);
-}
-
 .stage-page.is-thinking .stage-image {
-    filter: brightness(1.18) saturate(1.1);
+    filter: brightness(1.06) saturate(1.06);
 }
 
 /* What the assistant says while she walks the guest to the next scene. */
 .stage-tour {
     position: absolute;
     z-index: 20;
-    left: 50%;
-    bottom: calc(var(--dock-h) + var(--gutter) + 28px);
-    width: max-content;
-    max-width: min(720px, calc(100% - 48px));
-    padding: 14px 28px;
-    border-radius: 999px;
+    left: 20px;
+    right: 20px;
+    top: 26%;
+    padding: 14px 22px;
+    border-radius: 18px;
     background: var(--paper);
     box-shadow: var(--shadow-card);
     color: var(--ink);
-    font: italic clamp(17px, 1.8vw, 24px)/1.4 var(--font-display);
+    font: italic clamp(17px, 1.7vw, 22px)/1.4 var(--font-display);
     text-align: center;
     opacity: 0;
     pointer-events: none;
-    translate: -50% 0;
 }
 
 .stage-tour:empty {
@@ -99,7 +120,7 @@
     align-items: center;
     justify-content: center;
     gap: 18px;
-    background: var(--paper-deep);
+    background: var(--desk);
     color: var(--accent-deep);
     font-size: 14px;
     letter-spacing: .04em;
@@ -115,36 +136,36 @@
     transition: opacity .3s ease;
 }
 
-/* Leaving: the camera moves in while everything else fades. stage.js holds
-   navigation for 320/560/820 ms; keep these durations at or below that. */
+/* Leaving: the pane moves in while the folder fades. stage.js holds navigation
+   for 320/560/820 ms; keep these durations at or below that. */
 .stage.is-leaving .stage-image {
     transform: scale(1.09);
-    filter: brightness(.85);
+    filter: brightness(.9);
     transition: transform .8s var(--ease-cine), filter .6s ease;
     animation: none;
 }
 
-.stage.is-leaving > :not(.stage-image, .stage-shade, .stage-loader, .stage-tour) {
+.stage.is-leaving .stage-character {
     opacity: 0;
+    transform: translateY(8px) scale(.985);
+    transition: opacity .28s ease, transform .4s var(--ease-cine);
     animation: none;
-    transition: opacity .22s ease;
 }
 
-/* The chat sits inside a display:contents wrapper, so it has to be faded by hand. */
-.stage.is-leaving .chat-log,
-.stage.is-leaving .chat-bar,
-.stage.is-leaving .chat-launcher {
+.stage.is-leaving :is(.stage-tabs, .stage-content, .stage-caption, .stage-header, .chat-log, .chat-bar, .chat-launcher, .chat-draft-dialog) {
     opacity: 0;
     pointer-events: none;
     animation: none;
     transition: opacity .22s ease;
 }
 
+.stage.is-leaving .stage-tabs a {
+    animation: none;
+}
+
 /* `backwards`, not `both`: once they have arrived the resting styles must win again. */
-.stage-dock,
-.stage-welcome,
-.opening-panel,
-.opening-enter {
+.stage-content,
+.stage-caption {
     animation: stage-rise .5s var(--ease-cine) .12s backwards;
 }
 
@@ -152,18 +173,21 @@
     animation: stage-fade .5s ease .25s backwards;
 }
 
-.stage-navigation a,
+.stage-tabs a,
+.stage-tabs .stage-tab,
 .item-nav a,
+.destination-list li,
 .opening-links li {
     animation: stage-rise .45s var(--ease-cine) backwards;
-    animation-delay: calc(.2s + var(--i, 0) * 45ms);
+    animation-delay: calc(.12s + var(--i, 0) * 45ms);
 }
 
-.stage-navigation a:nth-child(1), .item-nav a:nth-child(1), .opening-links li:nth-child(1) { --i: 0; }
-.stage-navigation a:nth-child(2), .item-nav a:nth-child(2), .opening-links li:nth-child(2) { --i: 1; }
-.stage-navigation a:nth-child(3), .item-nav a:nth-child(3), .opening-links li:nth-child(3) { --i: 2; }
-.stage-navigation a:nth-child(4), .item-nav a:nth-child(4), .opening-links li:nth-child(4) { --i: 3; }
-.stage-navigation a:nth-child(n+5), .item-nav a:nth-child(n+5), .opening-links li:nth-child(n+5) { --i: 4; }
+.stage-tabs > :nth-child(1), .item-nav a:nth-of-type(1), .destination-list li:nth-child(1), .opening-links li:nth-child(1) { --i: 0; }
+.stage-tabs > :nth-child(2), .item-nav a:nth-of-type(2), .destination-list li:nth-child(2), .opening-links li:nth-child(2) { --i: 1; }
+.stage-tabs > :nth-child(3), .item-nav a:nth-of-type(3), .destination-list li:nth-child(3), .opening-links li:nth-child(3) { --i: 2; }
+.stage-tabs > :nth-child(4), .item-nav a:nth-of-type(4), .destination-list li:nth-child(4), .opening-links li:nth-child(4) { --i: 3; }
+.stage-tabs > :nth-child(5), .item-nav a:nth-of-type(5), .destination-list li:nth-child(5), .opening-links li:nth-child(5) { --i: 4; }
+.stage-tabs > :nth-child(n+6), .item-nav a:nth-of-type(n+6), .destination-list li:nth-child(n+6), .opening-links li:nth-child(n+6) { --i: 5; }
 
 @keyframes stage-settle {
     from { scale: 1.05; opacity: .7; }
@@ -203,21 +227,18 @@
     .stage-image,
     .stage-character,
     .stage-loader,
-    .stage-dock,
-    .stage-welcome,
-    .opening-panel,
-    .opening-enter,
+    .stage-content,
+    .stage-caption,
     .chat-launcher,
-    .stage-navigation a,
+    .stage-tabs a,
+    .stage-tabs .stage-tab,
     .item-nav a,
+    .destination-list li,
     .opening-links li {
         animation: none;
     }
 
-    .stage-image {
-        transition: none;
-    }
-
+    .stage-image,
     .stage.is-leaving .stage-image {
         transition: none;
     }

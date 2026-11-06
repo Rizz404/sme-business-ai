@@ -1,0 +1,172 @@
+/*
+ * The folder tabs along the top of the right column: one per destination, the
+ * current one joined to the sheet below it. The same file styles the card
+ * index used by the catalog and service scenes.
+ */
+
+.stage-tabs {
+    position: relative;
+    z-index: 4;
+    grid-area: tabs;
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    margin: 18px var(--folder-inset) -1px;
+    padding-top: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.stage-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.stage-tab {
+    position: relative;
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 11px 10px 10px;
+    border-radius: 14px 14px 0 0;
+    background: color-mix(in srgb, var(--paper) 52%, var(--desk));
+    box-shadow: inset 0 -8px 10px -10px rgb(29 35 71 / .5);
+    color: var(--ink-soft);
+    font-size: 12.5px;
+    font-weight: 600;
+    transition: background .2s, color .2s, transform .2s var(--ease-cine);
+}
+
+.stage-tab:hover {
+    background: color-mix(in srgb, var(--paper) 78%, var(--desk));
+    color: var(--ink);
+}
+
+.stage-tab[aria-current] {
+    z-index: 1;
+    flex-grow: 1.2;
+    padding-top: 15px;
+    padding-bottom: 12px;
+    background: var(--paper);
+    box-shadow: none;
+    color: var(--ink);
+}
+
+/* A marigold ribbon marks the open tab. */
+.stage-tab[aria-current]::before {
+    content: '';
+    position: absolute;
+    inset: 0 18px auto;
+    height: 4px;
+    border-radius: 0 0 4px 4px;
+    background: var(--marigold);
+}
+
+.nav-icon {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+}
+
+.stage-tab-label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Tight folder: only the open tab keeps its name. */
+@media (max-width: 1360px) {
+    .stage-tab:not([aria-current], .is-label) .stage-tab-label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+    }
+}
+
+/* The card index inside the catalog and service sheets. */
+.item-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.item-nav-heading {
+    grid-column: 1 / -1;
+    margin-top: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px dashed var(--line-strong);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.item-nav-heading:first-child {
+    margin-top: 0;
+}
+
+.item-nav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    padding: 10px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--paper-soft);
+    transition: transform .2s var(--ease-cine), border-color .2s, background .2s, box-shadow .2s;
+}
+
+.item-nav a:hover,
+.item-nav a[aria-current] {
+    transform: translateY(-2px);
+    border-color: var(--marigold);
+    background: var(--marigold-soft);
+    box-shadow: var(--shadow-soft);
+}
+
+.item-nav-thumb {
+    flex-shrink: 0;
+    width: 64px;
+    height: 56px;
+    border-radius: 10px;
+    object-fit: cover;
+    background: var(--paper-deep);
+}
+
+.item-nav-text {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.item-nav-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.item-nav-price {
+    font-size: 12px;
+    color: var(--ink-soft);
+}
+
+.item-nav-badge {
+    margin-left: 8px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--alert);
+    color: var(--paper);
+    font-size: 10px;
+    font-weight: 600;
+}

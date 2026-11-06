@@ -1,6 +1,7 @@
 /*
- * Content panels: paper cards on the right, between the header and the board.
- * The assistant stays in view on the left; a panel never reaches past 56% of the screen.
+ * The sheet of the folder: every scene's content is a paper sheet in the right
+ * column's middle cell. It scrolls by itself; the tabs above and the chat bar
+ * below stay put.
  */
 
 .stage-panels,
@@ -10,22 +11,17 @@
 }
 
 .stage-content {
-    --panel-w: 760px;
-
-    position: absolute;
+    position: relative;
     z-index: 3;
-    right: var(--gutter);
-    top: var(--header);
-    bottom: var(--panel-bottom);
-    width: min(var(--panel-w), 56vw);
+    grid-area: content;
+    min-height: 0;
+    margin-inline: var(--folder-inset);
     overflow-y: auto;
     overscroll-behavior: contain;
-    padding: 28px 32px;
-    border-radius: var(--radius-card);
+    padding: 30px var(--pad) 28px;
+    border-radius: 0 var(--radius-card) 0 0;
     background: var(--paper);
     color: var(--ink);
-    box-shadow: var(--shadow-card);
-    transition: right .38s var(--ease-cine), width .38s var(--ease-cine);
 }
 
 .stage-content[hidden] {
@@ -36,32 +32,15 @@
     outline: none;
 }
 
-.stage-content:not([hidden]) {
-    animation: panel-slide .4s var(--ease-cine) .06s both;
-}
-
-/* Beside the open drawer, a panel narrows instead of sliding under it. */
-.stage:has(.stage-chat.is-open) .stage-content {
-    right: calc(var(--drawer) + var(--gutter) * 2);
-    width: min(var(--panel-w), calc(100vw - var(--drawer) - 34vw - var(--gutter) * 3));
-}
-
 .stage-content > .stage-eyebrow {
-    color: var(--accent-deep);
+    color: var(--accent);
 }
 
+.stage-content h1,
 .stage-content h2 {
     margin-top: 8px;
-    font: 600 34px/1.15 var(--font-display);
-    letter-spacing: -.01em;
-}
-
-.stage-panel-right {
-    --panel-w: 780px;
-}
-
-.stage-panel-right h2 {
-    font-size: clamp(30px, 3vw, 42px);
+    font: 600 clamp(28px, 2.7vw, 40px)/1.12 var(--font-display);
+    letter-spacing: -.015em;
 }
 
 .panel-close {
@@ -93,7 +72,7 @@
     gap: 14px;
     border-radius: 999px;
     background: var(--accent);
-    color: var(--paper);
+    color: var(--on-accent);
     padding: 13px 22px;
     font-size: 13.5px;
     font-weight: 600;
@@ -122,7 +101,7 @@
 }
 
 .detail-scene h2 {
-    font-size: 32px;
+    font-size: clamp(26px, 2.5vw, 34px);
 }
 
 .detail-scene-step {
@@ -253,26 +232,6 @@
 }
 
 /* Facilities */
-.narrator-inline {
-    margin: 10px 0 0;
-    padding: 0;
-    border: 0;
-    background: none;
-}
-
-.narrator-inline .narrator-avatar,
-.narrator-inline .narrator-name {
-    display: none;
-}
-
-.narrator-inline .narrator-text {
-    min-height: 0;
-    margin-top: 0;
-    max-width: 620px;
-    font-size: 16px;
-    color: var(--ink-soft);
-}
-
 .facility-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -404,21 +363,7 @@
     margin-top: 34px;
 }
 
-/* Business information and talking to the team: shorter cards that hug their content. */
-.info-panel,
-.staff-panel {
-    bottom: auto;
-    max-height: calc(100dvh - var(--header) - var(--panel-bottom));
-}
-
-.info-panel {
-    --panel-w: 540px;
-}
-
-.staff-panel {
-    --panel-w: 520px;
-}
-
+/* Business information and talking to the team. */
 .info-panel h2,
 .staff-panel h2 {
     font-size: clamp(26px, 2.6vw, 36px);
@@ -625,18 +570,12 @@ a.info-fact:hover {
     color: var(--ink-soft);
 }
 
-@keyframes panel-slide {
-    from { opacity: 0; translate: 28px 0; }
-    to { opacity: 1; translate: 0 0; }
-}
-
 @keyframes scene-in {
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .stage-content:not([hidden]),
     .detail-scene:not([hidden]) {
         animation: none;
     }

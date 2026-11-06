@@ -1,8 +1,5 @@
-{{-- On the service scenes the side card becomes the area index, so the guest can step between areas without going back. --}}
-<aside class="stage-dock" aria-label="{{ $labels['service_heading'] }}">
-    <a href="{{ route('business.show', ['businessSlug' => $business->slug, 'lang' => $locale]) }}" data-stage-exit data-tour-line="{{ $narration['tour_home'] }}" class="stage-dock-back"><span aria-hidden="true">‹</span> {{ $stageCopy['explore'] }}</a>
-    <p class="stage-eyebrow">{{ $labels['service_heading'] }}</p>
-    <nav class="item-nav">
+{{-- The card index of the service sheet. --}}
+<nav class="item-nav">
         @foreach ($serviceAreas as $item)
             <a href="{{ route('business.service-area', ['businessSlug' => $business->slug, 'areaSlug' => $item->slug, 'lang' => $locale]) }}"
                 data-stage-exit
@@ -17,5 +14,3 @@
             </a>
         @endforeach
     </nav>
-    <span class="stage-dock-footer">{{ $stageCopy['available'] }} · SME BUSINESS AI</span>
-</aside>

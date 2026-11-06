@@ -1,9 +1,7 @@
 <x-business-stage :business="$business" :locale="$locale" :supported-locales="$supportedLocales" :labels="$labels" :stage-copy="$stageCopy" :narration="$narration" :scene="$scene" :backdrop="$backdrop" :nav-items="$navItems" :terms="$terms" :title="$catalogItem->translatedName($locale).' · '.$business->name">
-    @if($catalogItems->isNotEmpty())
-        <x-slot:sidebar>@include('business.catalog-nav')</x-slot:sidebar>
-    @endif
+    <x-slot:caption>
+        @include('business.narrator', ['text' => $catalogNarrations['item'][$catalogItem->slug], 'key' => 'item-'.$catalogItem->slug, 'onStage' => true])
+    </x-slot:caption>
 
-    <div class="stage-panels">
-        @include('business.catalog-scene')
-    </div>
+    @include('business.catalog-scene')
 </x-business-stage>

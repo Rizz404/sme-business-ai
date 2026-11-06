@@ -1,5 +1,14 @@
-@props(['business', 'locale', 'supportedLocales', 'labels', 'stageCopy', 'narration', 'scene', 'backdrop', 'navItems', 'terms' => [], 'title' => null, 'welcome' => null, 'sidebar' => null, 'nav' => true])
-{{-- The fixed full-screen stage every scene shares: backdrop, header, catalog and the AI Business Assistant chat dock. --}}
+@props(['business', 'locale', 'supportedLocales', 'labels', 'stageCopy', 'narration', 'scene', 'backdrop', 'navItems', 'terms' => [], 'title' => null, 'caption' => null])
+{{-- The split-screen stage every scene shares: an illustrated pane with the assistant and her caption card on the left, a folder (tabs, sheet, chat bar) on the right. --}}
+@php
+    $homeUrl = route('business.show', ['businessSlug' => $business->slug, 'lang' => $locale]);
+    $activeTab = match ($scene) {
+        'catalog-item' => 'catalog',
+        'service-area' => 'service',
+        'facility' => 'facilities',
+        default => $scene,
+    };
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', $locale) }}">
 <head>
@@ -11,48 +20,49 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="stage-page antialiased" style="--assistant-image: url('{{ $backdrop['avatarImage'] }}'); --stage-focus: {{ $backdrop['focus'] }}; --stage-focus-mobile: {{ $backdrop['focusMobile'] }}">
-    <main class="stage" data-stage data-scene="{{ $scene }}" data-page="{{ $scene }}" data-chat-dock="{{ $scene === 'info' ? 'center' : ($scene === 'staff' ? 'left' : 'right') }}">
+    <main class="stage" data-stage data-scene="{{ $scene }}" data-page="{{ $scene }}">
         <div class="stage-loader" data-stage-loader role="status"><span class="business-monogram" aria-hidden="true">{{ mb_substr($business->name, 0, 1) }}</span><p>{{ $stageCopy['loading'] }}</p></div>
-        <img src="{{ $backdrop['image'] }}" alt="" class="stage-image" fetchpriority="high">
-        <div class="stage-shade"></div>
-        <img src="{{ $backdrop['character'] }}" alt="{{ $stageCopy['assistant'] }}" class="stage-character" data-anchor="{{ $backdrop['anchor'] }}">
-        <p class="stage-tour" data-stage-tour aria-live="polite"></p>
 
-        <header class="stage-header">
-            <a href="{{ route('business.show', ['businessSlug' => $business->slug, 'lang' => $locale]) }}" @if($scene !== 'home') data-stage-exit data-tour-line="{{ $narration['tour_home'] }}" @endif class="flex min-w-0 items-center gap-3">
-                <span class="business-monogram" aria-hidden="true">{{ mb_substr($business->name, 0, 1) }}</span>
-                <span class="min-w-0"><span class="block truncate font-semibold tracking-tight">{{ $business->name }}</span><span class="block truncate text-xs opacity-75">{{ $business->city }} · {{ $business->country }}</span></span>
+        <section class="stage-pane" aria-label="{{ $stageCopy['assistant'] }}">
+            <img src="{{ $backdrop['image'] }}" alt="" class="stage-image" fetchpriority="high">
+            <div class="stage-shade"></div>
+            <img src="{{ $backdrop['character'] }}" alt="{{ $stageCopy['assistant'] }}" class="stage-character">
+            <p class="stage-tour" data-stage-tour aria-live="polite"></p>
+
+            <header class="stage-header">
+                <a href="{{ $homeUrl }}" @if($scene !== 'home') data-stage-exit data-tour-line="{{ $narration['tour_home'] }}" @endif class="flex min-w-0 items-center gap-3">
+                    <span class="business-monogram" aria-hidden="true">{{ mb_substr($business->name, 0, 1) }}</span>
+                    <span class="min-w-0"><span class="block truncate font-semibold tracking-tight">{{ $business->name }}</span><span class="block truncate text-xs opacity-75">{{ $business->city }} · {{ $business->country }}</span></span>
+                </a>
+                <div class="stage-tools">
+                    <x-sound-toggle :on="$stageCopy['sound_on']" :off="$stageCopy['sound_off']" />
+                    <nav aria-label="Language" class="stage-lang">
+                        @foreach ($supportedLocales as $code)
+                            <a href="?lang={{ $code }}" lang="{{ $code }}" aria-label="{{ ['id' => 'Bahasa Indonesia', 'en' => 'English', 'ja' => '日本語'][$code] }}" @if($code === $locale) aria-current="true" @endif>{{ $code }}</a>
+                        @endforeach
+                    </nav>
+                </div>
+            </header>
+
+            @if ($caption && ! $caption->isEmpty())
+                <div class="stage-caption">{{ $caption }}</div>
+            @endif
+        </section>
+
+        <nav class="stage-tabs" aria-label="{{ $stageCopy['explore'] }}">
+            <a href="{{ $homeUrl }}" class="stage-tab" title="{{ $stageCopy['home'] }}"
+                @if($scene !== 'home') data-stage-exit data-tour-line="{{ $narration['tour_home'] }}" @endif
+                @if($activeTab === 'home') aria-current="page" @endif>
+                <span class="nav-icon"><x-stage-icon name="home" /></span><span class="stage-tab-label">{{ $stageCopy['home'] }}</span>
             </a>
-            <div class="stage-tools">
-                <x-sound-toggle :on="$stageCopy['sound_on']" :off="$stageCopy['sound_off']" />
-                <nav aria-label="Language" class="stage-lang">
-                    @foreach ($supportedLocales as $code)
-                        <a href="?lang={{ $code }}" lang="{{ $code }}" aria-label="{{ ['id' => 'Bahasa Indonesia', 'en' => 'English', 'ja' => '日本語'][$code] }}" @if($code === $locale) aria-current="true" @endif>{{ $code }}</a>
-                    @endforeach
-                </nav>
-            </div>
-        </header>
-
-        {{ $welcome }}
-
-@if(! $nav)
-@elseif($sidebar)
-        {{ $sidebar }}
-@else
-        <aside class="stage-dock" aria-label="{{ $stageCopy['explore'] }}">
-            <p class="stage-eyebrow">{{ $stageCopy['explore'] }}</p>
-            <nav class="stage-navigation">
-                @foreach ($navItems as $item)
-                    <a href="{{ $item['href'] }}"
-                        @if($item['exit']) data-stage-exit @if($item['tour']) data-tour-line="{{ $item['tour'] }}" @endif data-topic="{{ $item['topic'] }}" @endif
-                        @if($item['key'] === $scene || ($scene === 'catalog-item' && $item['key'] === 'catalog') || ($scene === 'service-area' && $item['key'] === 'service')) aria-current="page" @endif>
-                        <span class="nav-icon"><x-stage-icon :name="$item['icon']" /></span><span>{{ $item['label'] }}</span>
-                    </a>
-                @endforeach
-            </nav>
-            <span class="stage-dock-footer">{{ $stageCopy['available'] }} · SME BUSINESS AI</span>
-        </aside>
-@endif
+            @foreach ($navItems as $item)
+                <a href="{{ $item['href'] }}" class="stage-tab" title="{{ $item['label'] }}"
+                    @if($item['exit']) data-stage-exit @if($item['tour']) data-tour-line="{{ $item['tour'] }}" @endif data-topic="{{ $item['topic'] }}" @endif
+                    @if($item['key'] === $activeTab) aria-current="page" @endif>
+                    <span class="nav-icon"><x-stage-icon :name="$item['icon']" /></span><span class="stage-tab-label">{{ $item['label'] }}</span>
+                </a>
+            @endforeach
+        </nav>
 
         {{ $slot }}
 

@@ -1,9 +1,7 @@
 <x-business-stage :business="$business" :locale="$locale" :supported-locales="$supportedLocales" :labels="$labels" :stage-copy="$stageCopy" :narration="$narration" :scene="$scene" :backdrop="$backdrop" :nav-items="$navItems" :terms="$terms" :title="$serviceArea->translatedName($locale).' · '.$business->name">
-    @if($serviceAreas->isNotEmpty())
-        <x-slot:sidebar>@include('business.service-nav')</x-slot:sidebar>
-    @endif
+    <x-slot:caption>
+        @include('business.narrator', ['text' => $serviceNarrations['area'][$serviceArea->slug], 'key' => 'area-'.$serviceArea->slug, 'onStage' => true])
+    </x-slot:caption>
 
-    <div class="stage-panels">
-        @include('business.service-scene')
-    </div>
+    @include('business.service-scene')
 </x-business-stage>

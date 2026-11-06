@@ -1,247 +1,163 @@
 /*
- * Small screens. The assistant peeks up from behind the dock, the speech bubble
- * shrinks to a title, the dock becomes a row of icons to swipe, panels become
- * sheets and the chat takes the whole screen.
+ * Small screens. The pane shrinks to a strip above the folder (the assistant on
+ * the left, her caption card on the right), the tabs become a row of icons to
+ * swipe, the sheet fills the rest and the chat takes the whole screen.
  */
 
 @media (max-width: 1100px) {
-    .stage-welcome {
-        left: max(36%, 340px);
-        width: min(440px, 40vw);
+    .stage {
+        --folder-inset: 20px;
+        --pad: 22px;
+    }
+
+    .destination-list {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .stage-header > :first-child .opacity-75 {
+        display: none;
     }
 }
 
 @media (min-width: 900px) and (max-height: 720px) {
     .stage {
-        --header: 72px;
-        --dock-h: 96px;
+        --pad: 22px;
     }
 
-    .nav-icon {
-        width: 40px;
-        height: 40px;
+    .stage-character {
+        height: 78%;
     }
 
-    .stage-welcome {
-        padding: 18px 24px 20px;
+    .stage-caption {
+        max-height: 48%;
+        padding: 10px 16px;
     }
 
-    .chat-log-messages {
-        padding-block: 12px;
+    .stage-tabs {
+        margin-top: 10px;
+    }
+
+    .stage-tab {
+        padding-block: 8px;
+    }
+
+    .stage-content {
+        padding-top: 22px;
     }
 }
 
 @media (max-width: 899px) {
     .stage {
-        --header: 68px;
-        --gutter: 12px;
-        --dock-h: 92px;
-        --drawer: calc(100vw - 24px);
-        /* The launcher floats at the bottom (above the dock when there is one), so panels end above it. */
-        --panel-bottom: calc(var(--gutter) + 64px);
+        --folder-inset: 8px;
+        --pad: 18px;
+        --chat-composer-height: 48px;
+
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: clamp(212px, 33dvh, 320px) auto minmax(0, 1fr) auto;
+        grid-template-areas:
+            "pane"
+            "tabs"
+            "content"
+            "bar";
     }
 
-    .stage:has(.stage-dock) {
-        --panel-bottom: calc(var(--dock-h) + var(--gutter) + 72px);
+    .stage-pane {
+        box-shadow: 0 10px 26px -14px rgb(29 35 71 / .6);
     }
 
     .stage-header {
-        padding: 0 var(--gutter);
+        padding: 10px 12px;
     }
 
     .stage-header > :first-child {
         padding-right: 14px;
     }
 
-    .stage-header > :first-child .opacity-75 {
-        display: none;
+    .business-monogram {
+        width: 36px;
+        height: 36px;
+        font-size: 20px;
     }
 
-    .stage-image {
-        object-position: var(--stage-focus-mobile, 50% 15%);
-    }
-
-    .stage-character {
-        left: -6%;
-        height: 50%;
-        max-width: 78%;
-    }
-
-    .stage-welcome {
-        left: var(--gutter);
-        right: var(--gutter);
-        top: calc(var(--header) + 4px);
-        width: auto;
-        padding: 14px 18px 16px;
-        border-radius: 22px;
-    }
-
-    .stage-welcome::before {
-        display: none;
-    }
-
-    .stage-welcome h1 {
-        margin-top: 6px;
-        font-size: 26px;
-    }
-
-    .stage-welcome > p {
-        display: none;
-    }
-
-    .stage-welcome .narrator-text {
-        min-height: 0;
-        font-size: 13.5px;
-        line-height: 1.55;
-    }
-
-    .stage-dock {
-        width: auto;
-        max-width: none;
-        padding: 8px 10px 8px;
-        gap: 0 8px;
-        border-radius: 26px;
-    }
-
-    .stage-dock:has(.item-nav) {
-        width: auto;
-        border-radius: 24px;
-    }
-
-    .stage-navigation {
-        display: flex;
-        justify-content: flex-start;
-        overflow-x: auto;
-        scroll-snap-type: x proximity;
-        scrollbar-width: none;
-    }
-
-    .stage-navigation::-webkit-scrollbar {
-        display: none;
-    }
-
-    .stage-navigation a {
-        flex: 0 0 82px;
-        min-width: 0;
-        min-height: 44px;
-        scroll-snap-align: start;
-    }
-
-    .nav-icon {
+    .sound-toggle {
         width: 38px;
         height: 38px;
     }
 
-    .stage-dock-back span:not([aria-hidden]) {
+    .stage-lang a {
+        padding: 5px 9px;
+    }
+
+    .stage-image {
+        object-position: var(--stage-focus-mobile, 50% 50%);
+    }
+
+    .stage-character {
+        left: -3%;
+        right: auto;
+        margin-inline: 0;
+        height: 88%;
+        max-width: 54%;
+        object-position: bottom left;
+    }
+
+    .stage-caption {
+        left: 42%;
+        right: 10px;
+        top: auto;
+        bottom: 10px;
+        max-height: calc(100% - 76px);
+        padding: 10px 12px;
+        border-radius: 16px;
+    }
+
+    .stage-caption .narrator-avatar {
         display: none;
     }
 
-    .item-nav a {
-        flex-basis: 190px;
+    .stage-caption .narrator-text {
+        font-size: 13px;
+        line-height: 1.5;
     }
 
-    .item-nav-thumb {
-        width: 52px;
-        height: 44px;
-    }
-
-    .stage-content {
-        left: var(--gutter);
-        right: var(--gutter);
-        top: auto;
-        width: auto;
-        max-height: calc(100dvh - var(--header) - var(--panel-bottom) - 120px);
-        height: auto;
-        padding: 20px;
-        border-radius: 22px;
-    }
-
-    .stage-content h2 {
-        font-size: 28px;
-    }
-
-    .info-panel,
-    .staff-panel {
-        bottom: var(--panel-bottom);
-        max-height: calc(100dvh - var(--header) - var(--panel-bottom) - 120px);
-    }
-
-    /* Panels and the open drawer share the narrow screen: the drawer wins. */
-    .stage:has(.stage-chat.is-open) .stage-content {
-        right: var(--gutter);
-        width: auto;
-    }
-
-    .stage:has(.stage-chat.is-open) .stage-dock {
-        right: var(--gutter);
-        max-width: none;
-    }
-
-    .stage:has(.stage-chat.is-open) .stage-dock:has(.stage-navigation) {
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-    }
-
-    .chat-launcher {
-        left: auto;
-        right: var(--gutter);
-        bottom: calc(var(--dock-h) + var(--gutter) + 12px);
-        width: 56px;
-        height: 56px;
-        padding: 0;
-    }
-
-    .stage:not(:has(.stage-dock)) .chat-launcher {
-        bottom: var(--gutter);
-    }
-
-    .chat-log {
-        left: var(--gutter);
-        right: var(--gutter);
-        top: var(--gutter);
-        bottom: var(--gutter);
-        width: auto;
-        z-index: 12;
-    }
-
-    .chat-bar {
-        left: calc(var(--gutter) + 12px);
-        right: calc(var(--gutter) + 12px);
-        bottom: calc(var(--gutter) + 12px);
-        width: auto;
-        z-index: 13;
-    }
-
-    .chat-draft-dialog {
-        left: calc(var(--gutter) + 12px);
-        right: calc(var(--gutter) + 12px);
-        bottom: calc(var(--gutter) + var(--chat-composer-height) + 28px);
-        width: auto;
-        z-index: 14;
+    .stage-caption .narrator-actions {
+        margin-top: 4px;
     }
 
     .stage-tour {
-        bottom: calc(var(--dock-h) + var(--gutter) + 24px);
+        top: 62px;
+        left: 12px;
+        right: 12px;
+        padding: 10px 14px;
+        font-size: 15px;
     }
 
-    .opening-panel {
-        top: calc(var(--header) + 8px);
-        padding: 22px 20px;
-        border-radius: 26px;
+    .stage-tabs {
+        margin-top: 8px;
+        padding-top: 4px;
     }
 
-    .opening-links {
-        display: none;
+    .stage-tab {
+        flex: 0 0 auto;
+        padding: 11px 14px 10px;
     }
 
-    .opening-enter {
-        bottom: 32px;
+    .stage-tab[aria-current] {
+        padding-top: 13px;
+        padding-bottom: 11px;
     }
 
-    .opening-button {
-        padding: 16px 28px;
-        font-size: 16px;
+    .stage-content {
+        padding-top: 22px;
+        padding-bottom: 22px;
+    }
+
+    .destination-list a {
+        padding-block: 10px;
+    }
+
+    .item-nav {
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .detail-scene-step,
@@ -249,19 +165,72 @@
         min-height: 44px;
     }
 
-    .stage-lang a {
-        padding: 6px 10px;
+    .detail-scene h2 {
+        font-size: 26px;
+    }
+
+    /* The chat takes the whole screen; its composer pins to the bottom edge. */
+    .chat-launcher {
+        padding: 10px 12px 12px;
+    }
+
+    .chat-launcher-dot {
+        right: 14px;
+        bottom: 30px;
+    }
+
+    .chat-launcher-label {
+        padding: 12px 18px;
+    }
+
+    .chat-log {
+        position: fixed;
+        z-index: 12;
+        inset: 0;
+        margin: 0;
+        border-radius: 0;
+        padding-bottom: calc(var(--chat-composer-height) + 38px + env(safe-area-inset-bottom, 0px));
+    }
+
+    .chat-bar {
+        position: fixed;
+        z-index: 13;
+        inset: auto 0 0;
+        margin: 0;
+        padding: 10px 12px calc(12px + env(safe-area-inset-bottom, 0px));
+        border-radius: 0;
+    }
+
+    .chat-bar input,
+    .chat-bar button {
+        min-height: 46px;
+    }
+
+    .chat-draft-dialog {
+        position: fixed;
+        z-index: 14;
+        inset: auto 12px calc(var(--chat-composer-height) + 38px + env(safe-area-inset-bottom, 0px));
+        margin: 0;
+    }
+
+    .opening-sheet {
+        grid-row: 3 / 5;
+        margin-bottom: 8px;
+    }
+}
+
+@media (max-width: 599px) {
+    .opening-links {
+        grid-template-columns: minmax(0, 1fr);
     }
 }
 
 @media (max-width: 899px) and (max-height: 640px) {
-    .stage-welcome {
-        display: none;
+    .stage {
+        grid-template-rows: 150px auto minmax(0, 1fr) auto;
     }
-}
 
-@media (max-width: 760px) {
-    .detail-scene h2 {
-        font-size: 26px;
+    .stage-caption .narrator-actions {
+        display: none;
     }
 }
