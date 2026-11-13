@@ -15,7 +15,7 @@ class CatalogItemSeeder extends Seeder
         foreach ($this->catalogDefinitions() as $definition) {
             $business->catalogItems()->updateOrCreate(
                 ['slug' => $definition['slug']],
-                [...$definition, 'image_url' => 'images/catalog/'.$definition['slug'].'.svg', 'sort_order' => $sort++, 'is_active' => true]
+                [...$definition, 'image_url' => 'images/catalog/'.$definition['slug'].'.webp', 'sort_order' => $sort++, 'is_active' => true]
             );
         }
     }

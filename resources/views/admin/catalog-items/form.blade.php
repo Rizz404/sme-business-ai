@@ -31,7 +31,7 @@
             <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <x-ui.input name="tags" label="Tags (comma-separated)" :value="old('tags', implode(', ', $catalogItem->tags ?? []))" placeholder="popular, new, promo, local, eco, bestseller" />
                 <x-ui.input name="requirements" label="Requirements (comma-separated)" :value="old('requirements', implode(', ', $catalogItem->requirements ?? []))" placeholder="appointment, deposit, documents, site_visit" />
-                <x-ui.input name="image_url" label="Image path or URL" :value="old('image_url', $catalogItem->image_url)" placeholder="images/catalog/logo-design.svg or https://…" class="sm:col-span-2" />
+                <x-ui.input name="image_url" label="Image path or URL" :value="old('image_url', $catalogItem->image_url)" placeholder="images/catalog/logo-design.webp or https://…" class="sm:col-span-2" />
             </div>
             <div class="mt-4 flex flex-wrap gap-6">
                 <x-ui.checkbox name="is_featured" label="Featured" :checked="old('is_featured', $catalogItem->is_featured)" />

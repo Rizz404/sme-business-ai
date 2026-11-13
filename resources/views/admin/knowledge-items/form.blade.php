@@ -14,7 +14,7 @@
                 </x-ui.select>
                 <x-ui.input name="sort_order" type="number" label="Sort order" :value="old('sort_order', $item->sort_order)" />
                 <x-ui.input name="tags" label="Tags (comma-separated, helps the AI match guest questions)" :value="old('tags', implode(', ', $item->tags ?? []))" placeholder="wifi, password, internet" class="col-span-2" />
-                <x-ui.input name="image_url" label="Image path or URL (shown on the facility cards)" :value="old('image_url', $item->image_url)" placeholder="images/scenes/terrace.svg or https://…" class="col-span-2" />
+                <x-ui.input name="image_url" label="Image path or URL (shown on the facility cards)" :value="old('image_url', $item->image_url)" placeholder="images/scenes/studio.webp or https://…" class="col-span-2" />
                 <x-ui.checkbox name="is_active" label="Active (the AI can use this entry)" :checked="old('is_active', $item->is_active)" class="col-span-2" />
             </div>
         </x-ui.card>

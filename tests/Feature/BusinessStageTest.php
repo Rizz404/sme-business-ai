@@ -117,7 +117,7 @@ class BusinessStageTest extends TestCase
             ->assertSee('Milk')
             ->assertSee('Signature')
             ->assertSee('Contains: milk.')
-            ->assertSee('images/catalog/logo-design.svg', false);
+            ->assertSee('images/catalog/logo-design.webp', false);
 
         $this->get('/demo/catalog/rush-addon?lang=en')->assertOk()->assertSee('Sold out today');
 

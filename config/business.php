@@ -59,21 +59,20 @@ return [
     | cut-out of the assistant standing in front of it. The background fills
     | the tall left pane (object-position "focus") or the strip above the
     | folder on a phone ("focusMobile"). Scenes without artwork of their own
-    | borrow another scene's. Regenerate every file with
-    | `python scripts/generate-stage-assets.py`.
+    | borrow another scene's. Generated artwork lives under public/images.
     |
     */
 
-    'avatar_image' => 'images/assistant/avatar.svg',
+    'avatar_image' => 'images/assistant/avatar.webp',
 
     'scenes' => [
-        'home' => ['image' => 'images/scenes/storefront.svg', 'character' => 'images/character/assistant-greeting.svg', 'focus' => '50% 50%', 'focusMobile' => '50% 50%'],
-        'catalog' => ['image' => 'images/scenes/catalog.svg', 'character' => 'images/character/assistant-notepad.svg', 'focus' => '50% 50%', 'focusMobile' => '50% 50%'],
-        'service' => ['image' => 'images/scenes/workspace.svg', 'character' => 'images/character/assistant-clasped.svg', 'focus' => '50% 50%', 'focusMobile' => '50% 50%'],
-        'facilities' => ['image' => 'images/scenes/studio.svg', 'character' => 'images/character/assistant-greeting.svg', 'focus' => '50% 50%', 'focusMobile' => '50% 50%'],
-        'info' => ['image' => 'images/scenes/office.svg', 'character' => 'images/character/assistant-clasped.svg', 'focus' => '50% 50%', 'focusMobile' => '50% 50%'],
-        'staff' => ['image' => 'images/scenes/team.svg', 'character' => 'images/character/assistant-clasped.svg', 'focus' => '50% 50%', 'focusMobile' => '50% 50%'],
-        'booking' => ['image' => 'images/scenes/booking.svg', 'character' => 'images/character/assistant-notepad.svg', 'focus' => '50% 50%', 'focusMobile' => '50% 50%'],
+        'home' => ['image' => 'images/scenes/storefront.webp', 'character' => 'images/character/assistant-greeting.webp', 'focus' => '50% 50%', 'focusMobile' => '50% 50%'],
+        'catalog' => ['image' => 'images/scenes/catalog.webp', 'character' => 'images/character/assistant-notepad.webp', 'focus' => '50% 50%', 'focusMobile' => '50% 50%'],
+        'service' => ['image' => 'images/scenes/workspace.webp', 'character' => 'images/character/assistant-clasped.webp', 'focus' => '50% 50%', 'focusMobile' => '50% 50%'],
+        'facilities' => ['image' => 'images/scenes/studio.webp', 'character' => 'images/character/assistant-greeting.webp', 'focus' => '50% 50%', 'focusMobile' => '50% 50%'],
+        'info' => ['image' => 'images/scenes/office.webp', 'character' => 'images/character/assistant-clasped.webp', 'focus' => '50% 50%', 'focusMobile' => '50% 50%'],
+        'staff' => ['image' => 'images/scenes/team.webp', 'character' => 'images/character/assistant-clasped.webp', 'focus' => '50% 50%', 'focusMobile' => '50% 50%'],
+        'booking' => ['image' => 'images/scenes/booking.webp', 'character' => 'images/character/assistant-notepad.webp', 'focus' => '50% 50%', 'focusMobile' => '50% 50%'],
     ],
 
     'scene_artwork' => [

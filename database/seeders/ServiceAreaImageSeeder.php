@@ -33,18 +33,18 @@ class ServiceAreaImageSeeder extends Seeder
     {
         return [
             'studio-front' => [
-                ['url' => 'images/service/studio-front.svg', 'tags' => ['showcase'], 'alt' => 'Etalase dan meja pelayanan Studio Front'],
-                ['url' => 'images/scenes/storefront.svg', 'tags' => ['storefront'], 'alt' => 'Suasana depan studio'],
+                ['url' => 'images/service/studio-front.webp', 'tags' => ['showcase'], 'alt' => 'Etalase dan meja pelayanan Studio Front'],
+                ['url' => 'images/scenes/storefront.webp', 'tags' => ['storefront'], 'alt' => 'Suasana depan studio'],
             ],
             'workshop-room' => [
-                ['url' => 'images/service/workshop-room.svg', 'tags' => ['workshop'], 'alt' => 'Meja panjang dan papan tulis di Ruang Workshop'],
-                ['url' => 'images/scenes/workspace.svg', 'tags' => ['room'], 'alt' => 'Suasana Ruang Workshop'],
+                ['url' => 'images/service/workshop-room.webp', 'tags' => ['workshop'], 'alt' => 'Meja panjang dan papan tulis di Ruang Workshop'],
+                ['url' => 'images/scenes/workspace.webp', 'tags' => ['room'], 'alt' => 'Suasana Ruang Workshop'],
             ],
             'online-consultation' => [
-                ['url' => 'images/service/online-consultation.svg', 'tags' => ['video'], 'alt' => 'Layar video call konsultasi online'],
+                ['url' => 'images/service/online-consultation.webp', 'tags' => ['video'], 'alt' => 'Layar video call konsultasi online'],
             ],
             'onsite-visit' => [
-                ['url' => 'images/service/onsite-visit.svg', 'tags' => ['visit'], 'alt' => 'Tim studio mengunjungi lokasi usaha pelanggan'],
+                ['url' => 'images/service/onsite-visit.webp', 'tags' => ['visit'], 'alt' => 'Tim studio mengunjungi lokasi usaha pelanggan'],
             ],
         ];
     }
